@@ -101,13 +101,14 @@ func ReadBody(res *http.Response, v interface{}) error {
 //
 // https://docs.aliyun.com/#/pub/ecs/open-api/requestmethod&commonresponse
 type Error struct {
-	Code, Message string
-	RequestId     string
-	HostId        string
+	Code      string
+	Message   string
+	RequestId string
+	HostId    string
 }
 
 func (e Error) Error() string {
-	return fmt.Sprintf("Code: %s, Message: %s, RequestId: %s, HostId: %s", e.Code, e.Message, e.RequestId, e.HostId)
+	return fmt.Sprintf("Code: %s, RequestId: %s, HostId: %s, Message: %s", e.Code, e.RequestId, e.HostId, e.Message)
 }
 
 // Response represents a response only returns RequestId.
