@@ -68,6 +68,7 @@ func NewParams() openapi.Params {
 			readJSON(i, api)
 
 			api.Clean()
+			action := api.Action()
 
 			name := MustExport(api.Name)
 
@@ -91,7 +92,8 @@ func NewParams() openapi.Params {
 args := NewParams()
 
 args.Query.Set("Action", %q)
-`, name, strings.Join(a[1], ", "), typ, name))
+`, name, strings.Join(a[1], ", "), typ, action))
+
 			if len(a[2]) > 0 {
 				buf.WriteString(strings.Join(a[2], "\n"))
 				buf.WriteByte('\n')

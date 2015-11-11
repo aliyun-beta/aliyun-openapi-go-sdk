@@ -593,10 +593,10 @@ func (api API) ReleaseJob(ResourceName string, optional openapi.M) (*openapi.Res
 func (api API) StartJob(ResourceName string, optional openapi.M) (*openapi.Response, error) {
 	args := NewParams()
 
-	args.Query.Set("Action", "StartJob")
+	args.Query.Set("Action", "Start")
 	args.Method = "PUT"
 	args.Path["ResourceName"] = ResourceName
-	args.Pattern = `/jobs/[ResourceName]?Action=Start`
+	args.Pattern = `/jobs/[ResourceName]`
 	if v, ok := optional["_region"]; ok {
 		if s, ok := v.(string); ok {
 			args.Region = s
@@ -633,10 +633,10 @@ func (api API) StartJob(ResourceName string, optional openapi.M) (*openapi.Respo
 func (api API) StopJob(ResourceName string, optional openapi.M) (*openapi.Response, error) {
 	args := NewParams()
 
-	args.Query.Set("Action", "StopJob")
+	args.Query.Set("Action", "Stop")
 	args.Method = "PUT"
 	args.Path["ResourceName"] = ResourceName
-	args.Pattern = `/jobs/[ResourceName]?Action=Stop`
+	args.Pattern = `/jobs/[ResourceName]`
 	if v, ok := optional["_region"]; ok {
 		if s, ok := v.(string); ok {
 			args.Region = s

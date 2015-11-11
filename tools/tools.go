@@ -69,10 +69,24 @@ type API struct {
 func (api *API) Clean() {
 	api.IsvProtocol.Method = strings.ToUpper(CleanValues(api.IsvProtocol.Method, "|"))
 	api.IsvProtocol.Protocol = strings.ToLower(CleanValues(api.IsvProtocol.Protocol, "|"))
+	api.IsvProtocol.Pattern = strings.TrimSpace(api.IsvProtocol.Pattern)
 	for k, v := range api.Parameters.Parameters {
 		api.Parameters.Parameters[k].Value = CleanValues(v.Value, ",")
 		api.Parameters.Parameters[k].TagPosition = strings.ToLower(strings.TrimSpace(v.TagPosition))
 	}
+}
+
+func (api *API) Action() string {
+	action := MustExport(api.Name)
+	const prefix = "?Action="
+	if i := strings.Index(api.IsvProtocol.Pattern, prefix); i != -1 { // BatchCompute
+		action = api.IsvProtocol.Pattern[i+len(prefix):]
+		api.IsvProtocol.Pattern = api.IsvProtocol.Pattern[:i]
+	}
+	if strings.Contains(api.IsvProtocol.Pattern, "?") {
+		Exitln("Pattern")
+	}
+	return action
 }
 
 func (api *API) GenerateParameters() (data [4][]string) {
@@ -129,7 +143,7 @@ func (api *API) GenerateParameters() (data [4][]string) {
 	// statusKeyValueRegexp := regexp.MustCompile(`^Status(Key|Value)\d+$`)
 
 	for _, i := range api.Parameters.Parameters {
-		// if statusKeyValueRegexp.MatchString(i.TagName) { // ubsms, ubsms-inner
+		// if statusKeyValueRegexp.MatchString(i.TagName) { // Ubsms, Ubsms-inner
 		// 	i.TagName = statusKeyValueRegexp.ReplaceAllStringFunc(i.TagName, func(s string) string {
 		// 		return s + "."
 		// 	})
@@ -306,7 +320,7 @@ func (p APIParameter) ValidateValue() string {
 
 func (p APIParameter) Name() string {
 	name := p.TagName
-	if name == "type" { // ace-ops
+	if name == "type" { // Ace-ops
 		name = "typ"
 	} else {
 		name = strings.Replace(name, ".", "", -1)
