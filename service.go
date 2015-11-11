@@ -48,16 +48,10 @@ func (s Service) Do(v interface{}, args Params) error {
 	return ReadBody(res, v)
 }
 
-// just for test
-var pause = 0 // seconds
-
 // GetResponse sends an HTTP request and returns the HTTP response.
 //
 // See the method GetRequest to get more.
 func (s Service) GetResponse(args Params) (*http.Response, error) {
-	if pause > 0 {
-		time.Sleep(time.Duration(pause) * time.Second)
-	}
 	req, err := s.GetRequest(args)
 	if err != nil {
 		return nil, err
@@ -88,7 +82,7 @@ func (s Service) GetRequest(args Params) (*http.Request, error) {
 		scheme = s.Scheme()
 	}
 
-	domain := GetDomain(args.Region, args.Product)
+	domain := GetDomain(args.Product, args.Region)
 	if domain == "" {
 		domain = s.Domain
 		if domain == "" {

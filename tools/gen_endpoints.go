@@ -32,66 +32,71 @@ func main() {
 	var v Endpoints
 	err = xml.Unmarshal(data, &v)
 	ErrFatal(err)
+
 	buf := new(bytes.Buffer)
 	buf.WriteString("// Copyright 2015 Chen Xianren. All rights reserved.\n")
 	buf.WriteString("// Code generated from endpoints.xml; DO NOT EDIT\n\n")
 	buf.WriteString("package openapi\n")
-	m := make(map[string]map[string]string)
-	for _, i := range v.Endpoint {
-		if i.Name == "cn-hangzhou" {
-			buf.WriteString("\n// Region List\n")
-			buf.WriteString("const (\n")
-			for _, j := range i.RegionIds.RegionId {
-				buf.WriteString(fmt.Sprintf("Region%s = %q\n", constName(j), j))
-			}
-			buf.WriteString(")\n")
-		} else if !(len(i.RegionIds.RegionId) == 1 && i.RegionIds.RegionId[0] == i.Name) {
-			Exitln(i.Name)
-		}
 
-		if _, ok := m[i.Name]; ok {
-			Exitln(i.Name)
-		}
-		x := make(map[string]string, len(i.Products.Product))
-		for _, j := range i.Products.Product {
-			if _, ok := m[j.ProductName]; ok {
-				Exitln(i.Name, j.ProductName)
+	buf.WriteString("\n// Region List\n")
+	buf.WriteString("const (\n")
+	{
+		var a []string
+		for _, i := range v.Endpoint {
+			for _, j := range i.RegionIds.RegionId {
+				j = strings.TrimSpace(j)
+				a = append(a, fmt.Sprintf("%s = %q\n", constName(j), j))
 			}
-			x[j.ProductName] = j.DomainName
 		}
-		m[i.Name] = x
+		buf.WriteString(strings.Join(RemoveDuplicate(a), ""))
 	}
-	a := make([]string, 0, len(m))
-	for k := range m {
-		a = append(a, k)
-	}
-	sort.Strings(a)
-	buf.WriteString("\n// Domains [region][product]\n")
-	buf.WriteString("var Domains =  map[string]map[string]string{\n")
-	for _, k := range a {
-		v := m[k]
-		b := make([]string, 0, len(v))
-		for i := range v {
-			b = append(b, i)
+	buf.WriteString(")\n")
+
+	buf.WriteString("\n// Regions [Region]:TopRegion\n")
+	buf.WriteString("var Regions = map[string]string{\n")
+	{
+		var a []string
+		for _, i := range v.Endpoint {
+			i.Name = strings.TrimSpace(i.Name)
+			for _, j := range i.RegionIds.RegionId {
+				j = strings.TrimSpace(j)
+				a = append(a, fmt.Sprintf("%s: %s,\n", constName(j), constName(i.Name)))
+			}
 		}
-		sort.Strings(b)
-		buf.WriteString(fmt.Sprintf("%q: {\n", k))
-		for _, i := range b {
-			buf.WriteString(fmt.Sprintf("%q: %q,\n", i, v[i]))
-		}
-		buf.WriteString("},\n")
+		buf.WriteString(strings.Join(RemoveDuplicate(a), ""))
 	}
 	buf.WriteString("}\n")
+
+	buf.WriteString("\n// Domains [TopRegion][Product]:Domain\n")
+	buf.WriteString("var Domains =  map[string]map[string]string{\n")
+	{
+		var a []string
+		for _, i := range v.Endpoint {
+			i.Name = strings.TrimSpace(i.Name)
+			var b []string
+			for _, j := range i.Products.Product {
+				j.ProductName = strings.TrimSpace(j.ProductName)
+				j.DomainName = strings.TrimSpace(j.DomainName)
+				b = append(b, fmt.Sprintf("%q: %q,\n", j.ProductName, j.DomainName))
+			}
+			a = append(a, fmt.Sprintf("%s: {\n%s},\n",
+				constName(i.Name), strings.Join(RemoveDuplicate(b), "")))
+		}
+		sort.Strings(a)
+		buf.WriteString(strings.Join(a, ""))
+	}
+	buf.WriteString("}\n")
+
 	buf.WriteString(`
-// GetDomain returns the access domain given a region and product.
-func GetDomain(region, product string) string {
+// GetDomain returns the access domain given a product and optional region.
+func GetDomain(product, region string) string {
+	if product == "" {
+		return ""
+	}
 	if region == "" {
-		region = "cn-hangzhou"
+		region = RegionCNHangzhou
 	}
-	if v, ok := Domains[region]; ok {
-		return v[product]
-	}
-	return ""
+	return Domains[Regions[region]][product]
 }
 `)
 	ErrFatal(ioutil.WriteFile("../endpoints.go", buf.Bytes(), 0644))
@@ -105,5 +110,5 @@ func constName(s string) string {
 			a[k+1] = string(x-'a'+'A') + v[1:]
 		}
 	}
-	return strings.Join(a, "")
+	return "Region" + strings.Join(a, "")
 }

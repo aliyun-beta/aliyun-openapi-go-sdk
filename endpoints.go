@@ -5,20 +5,37 @@ package openapi
 
 // Region List
 const (
+	RegionAPSoutheast1        = "ap-southeast-1"
 	RegionCNBeijing           = "cn-beijing"
 	RegionCNHangzhou          = "cn-hangzhou"
 	RegionCNHangzhouD         = "cn-hangzhou-d"
 	RegionCNHongkong          = "cn-hongkong"
-	RegionCNShanghaiEt2B01    = "cn-shanghai-et2-b01"
+	RegionCNQingdao           = "cn-qingdao"
 	RegionCNShanghai          = "cn-shanghai"
-	RegionUSWest1             = "us-west-1"
+	RegionCNShanghaiEt2B01    = "cn-shanghai-et2-b01"
 	RegionCNShanghaiEt2Test01 = "cn-shanghai-et2-test01"
-	RegionAPSoutheast1        = "ap-southeast-1"
+	RegionCNShenzhen          = "cn-shenzhen"
+	RegionUSWest1             = "us-west-1"
 )
 
-// Domains [region][product]
+// Regions [Region]:TopRegion
+var Regions = map[string]string{
+	RegionAPSoutheast1:        RegionCNHangzhou,
+	RegionCNBeijing:           RegionCNHangzhou,
+	RegionCNHangzhou:          RegionCNHangzhou,
+	RegionCNHangzhouD:         RegionCNHangzhou,
+	RegionCNHongkong:          RegionCNHangzhou,
+	RegionCNQingdao:           RegionCNQingdao,
+	RegionCNShanghai:          RegionCNHangzhou,
+	RegionCNShanghaiEt2B01:    RegionCNHangzhou,
+	RegionCNShanghaiEt2Test01: RegionCNHangzhou,
+	RegionCNShenzhen:          RegionCNShenzhen,
+	RegionUSWest1:             RegionCNHangzhou,
+}
+
+// Domains [TopRegion][Product]:Domain
 var Domains = map[string]map[string]string{
-	"cn-hangzhou": {
+	RegionCNHangzhou: {
 		"Aas":         "aas.aliyuncs.com",
 		"Ace":         "ace.cn-hangzhou.aliyuncs.com",
 		"Alert":       "alert.aliyuncs.com",
@@ -53,7 +70,7 @@ var Domains = map[string]map[string]string{
 		"Ubsms-inner": "ubsms-inner.aliyuncs.com",
 		"Yundun":      "yundun-cn-hangzhou.aliyuncs.com",
 	},
-	"cn-qingdao": {
+	RegionCNQingdao: {
 		"Aas":          "aas.aliyuncs.com",
 		"Ace":          "ace.cn-hangzhou.aliyuncs.com",
 		"Alert":        "alert.aliyuncs.com",
@@ -89,7 +106,7 @@ var Domains = map[string]map[string]string{
 		"Ubsms-inner":  "ubsms-inner.aliyuncs.com",
 		"Yundun":       "yundun-cn-hangzhou.aliyuncs.com",
 	},
-	"cn-shenzhen": {
+	RegionCNShenzhen: {
 		"Aas":          "aas.aliyuncs.com",
 		"Ace":          "ace.cn-hangzhou.aliyuncs.com",
 		"Alert":        "alert.aliyuncs.com",
@@ -127,13 +144,13 @@ var Domains = map[string]map[string]string{
 	},
 }
 
-// GetDomain returns the access domain given a region and product.
-func GetDomain(region, product string) string {
+// GetDomain returns the access domain given a product and optional region.
+func GetDomain(product, region string) string {
+	if product == "" {
+		return ""
+	}
 	if region == "" {
-		region = "cn-hangzhou"
+		region = RegionCNHangzhou
 	}
-	if v, ok := Domains[region]; ok {
-		return v[product]
-	}
-	return ""
+	return Domains[Regions[region]][product]
 }
