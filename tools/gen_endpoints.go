@@ -52,7 +52,7 @@ func main() {
 	}
 	buf.WriteString(")\n")
 
-	buf.WriteString("\n// Regions [Region]:TopRegion\n")
+	buf.WriteString("\n// Regions [Region]:Endpoint\n")
 	buf.WriteString("var Regions = map[string]string{\n")
 	{
 		var a []string
@@ -67,7 +67,7 @@ func main() {
 	}
 	buf.WriteString("}\n")
 
-	buf.WriteString("\n// Domains [TopRegion][Product]:Domain\n")
+	buf.WriteString("\n// Domains [Endpoint][Product]:Domain\n")
 	buf.WriteString("var Domains =  map[string]map[string]string{\n")
 	{
 		var a []string

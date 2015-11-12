@@ -18,7 +18,7 @@ const (
 	RegionUSWest1             = "us-west-1"
 )
 
-// Regions [Region]:TopRegion
+// Regions [Region]:Endpoint
 var Regions = map[string]string{
 	RegionAPSoutheast1:        RegionCNHangzhou,
 	RegionCNBeijing:           RegionCNHangzhou,
@@ -33,7 +33,7 @@ var Regions = map[string]string{
 	RegionUSWest1:             RegionCNHangzhou,
 }
 
-// Domains [TopRegion][Product]:Domain
+// Domains [Endpoint][Product]:Domain
 var Domains = map[string]map[string]string{
 	RegionCNHangzhou: {
 		"Aas":         "aas.aliyuncs.com",
