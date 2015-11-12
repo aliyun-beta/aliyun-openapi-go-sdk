@@ -13,7 +13,6 @@ import (
 var (
 	_ = errors.New("")
 	_ = fmt.Sprint("")
-	_ = make(openapi.M)
 )
 
 type API struct {
