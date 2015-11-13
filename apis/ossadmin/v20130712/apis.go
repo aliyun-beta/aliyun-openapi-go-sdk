@@ -453,7 +453,7 @@ type PutBucketStatusResponse struct {
 func (api API) CreateOssInstance(optional openapi.M) (*CreateOssInstanceResponse, error) {
 	args := NewParams()
 
-	args.Query.Set("Action", "CreateOssInstance")
+	args.Query.Set("Action", "createOssInstance")
 	if v, ok := optional["OwnerAccount"]; ok {
 		if OwnerAccount, ok := v.(string); ok {
 			args.Query.Set("OwnerAccount", OwnerAccount)

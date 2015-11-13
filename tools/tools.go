@@ -77,7 +77,7 @@ func (api *API) Clean() {
 }
 
 func (api *API) Action() string {
-	action := MustExport(api.Name)
+	action := strings.TrimSpace(api.Name)
 	const prefix = "?Action="
 	if i := strings.Index(api.IsvProtocol.Pattern, prefix); i != -1 { // BatchCompute
 		action = api.IsvProtocol.Pattern[i+len(prefix):]
@@ -85,6 +85,9 @@ func (api *API) Action() string {
 	}
 	if strings.Contains(api.IsvProtocol.Pattern, "?") {
 		Exitln("Pattern")
+	}
+	if action == "" {
+		Exitln("Action")
 	}
 	return action
 }

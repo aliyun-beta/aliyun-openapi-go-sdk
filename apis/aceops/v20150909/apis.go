@@ -52,7 +52,7 @@ const (
 func (api API) Query(group, ip, name string, optional openapi.M) (*QueryResponse, error) {
 	args := NewParams()
 
-	args.Query.Set("Action", "Query")
+	args.Query.Set("Action", "query")
 	args.Query.Set("group", group)
 	args.Query.Set("ip", ip)
 	args.Query.Set("name", name)
@@ -121,7 +121,7 @@ type QueryResponse struct {
 func (api API) Report(group, ip, name, typ string, optional openapi.M) (*openapi.Response, error) {
 	args := NewParams()
 
-	args.Query.Set("Action", "Report")
+	args.Query.Set("Action", "report")
 	args.Query.Set("group", group)
 	args.Query.Set("ip", ip)
 	args.Query.Set("name", name)

@@ -48,7 +48,7 @@ const (
 func (api API) DrcGuidRouteApi(guid string, optional openapi.M) (*DrcGuidRouteApiResponse, error) {
 	args := NewParams()
 
-	args.Query.Set("Action", "DrcGuidRouteApi")
+	args.Query.Set("Action", "drcGuidRouteApi")
 	args.Query.Set("guid", guid)
 	args.Scheme = "http"
 	if v, ok := optional["_method"]; ok {

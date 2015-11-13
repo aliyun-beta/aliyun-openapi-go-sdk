@@ -51,7 +51,7 @@ const (
 func (api API) RestartOss(optional openapi.M) (*RestartOssResponse, error) {
 	args := NewParams()
 
-	args.Query.Set("Action", "RestartOss")
+	args.Query.Set("Action", "restartOss")
 	if v, ok := optional["OwnerAccount"]; ok {
 		if OwnerAccount, ok := v.(string); ok {
 			args.Query.Set("OwnerAccount", OwnerAccount)
@@ -149,7 +149,7 @@ type RestartOssResponse struct {
 func (api API) StopOss(optional openapi.M) (*StopOssResponse, error) {
 	args := NewParams()
 
-	args.Query.Set("Action", "StopOss")
+	args.Query.Set("Action", "stopOss")
 	if v, ok := optional["OwnerAccount"]; ok {
 		if OwnerAccount, ok := v.(string); ok {
 			args.Query.Set("OwnerAccount", OwnerAccount)

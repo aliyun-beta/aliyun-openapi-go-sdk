@@ -3058,7 +3058,7 @@ type UpdateProjectResponse struct {
 func (api API) UpdateSQLMetrics(optional openapi.M) (*UpdateSQLMetricsResponse, error) {
 	args := NewParams()
 
-	args.Query.Set("Action", "UpdateSQLMetrics")
+	args.Query.Set("Action", "updateSQLMetrics")
 	args.Method = "POST"
 	args.Scheme = "http"
 	if v, ok := optional["IsPublic"]; ok {
