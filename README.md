@@ -10,14 +10,7 @@ Aliyun OpenAPI Go SDK
 - ...
 
 ### Install
-```
-$ cd ${GOPATH}/src # change the GOPATH if required
-$ mkdir -p git.oschina.net/cxr29 && cd git.oschina.net/cxr29
-$ git clone https://git.oschina.net/cxr29/aliyun-openapi-go-sdk.git
-$ go install git.oschina.net/cxr29/aliyun-openapi-go-sdk
-```
-or
-```$ go get git.oschina.net/cxr29/aliyun-openapi-go-sdk.git # it isn't working now```
+```$ go get github.com/cxr29/aliyun-openapi-go-sdk```
 
 ### Usage
 ```
@@ -27,8 +20,8 @@ import (
 	"fmt"
 	"os"
 
-	"git.oschina.net/cxr29/aliyun-openapi-go-sdk"
-	"git.oschina.net/cxr29/aliyun-openapi-go-sdk/apis/cdn/v20141111"
+	"github.com/cxr29/aliyun-openapi-go-sdk"
+	"github.com/cxr29/aliyun-openapi-go-sdk/apis/cdn/v20141111"
 )
 
 func fatal(err error) {
@@ -76,7 +69,7 @@ func main() {
 ```
 
 ### API Doc
-https://godoc.org/git.oschina.net/cxr29/aliyun-openapi-go-sdk.git
+https://godoc.org/github.com/cxr29/aliyun-openapi-go-sdk
 
 ### Test
 ```

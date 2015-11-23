@@ -1,7 +1,7 @@
 // Copyright 2015 Chen Xianren. All rights reserved.
 
 // Package openapi implements a library of Aliyun OpenAPI.
-package openapi
+package openapi // import "github.com/cxr29/aliyun-openapi-go-sdk"
 
 import (
 	"bytes"
