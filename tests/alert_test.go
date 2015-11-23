@@ -5,8 +5,8 @@ package openapi
 import (
 	"testing"
 
-	"git.oschina.net/cxr29/aliyun-openapi-go-sdk"
-	"git.oschina.net/cxr29/aliyun-openapi-go-sdk/apis/alert/v20150815"
+	"github.com/cxr29/aliyun-openapi-go-sdk"
+	"github.com/cxr29/aliyun-openapi-go-sdk/apis/alert/v20150815"
 )
 
 func TestAlert(t *testing.T) {

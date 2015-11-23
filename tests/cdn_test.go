@@ -5,8 +5,8 @@ package openapi
 import (
 	"testing"
 
-	"git.oschina.net/cxr29/aliyun-openapi-go-sdk"
-	"git.oschina.net/cxr29/aliyun-openapi-go-sdk/apis/cdn/v20141111"
+	"github.com/cxr29/aliyun-openapi-go-sdk"
+	"github.com/cxr29/aliyun-openapi-go-sdk/apis/cdn/v20141111"
 )
 
 func TestCdn(t *testing.T) {

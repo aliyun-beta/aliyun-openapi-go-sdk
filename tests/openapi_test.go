@@ -7,7 +7,7 @@ import (
 	"runtime"
 	"testing"
 
-	"git.oschina.net/cxr29/aliyun-openapi-go-sdk"
+	"github.com/cxr29/aliyun-openapi-go-sdk"
 )
 
 func stack(t *testing.T) {
