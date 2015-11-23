@@ -1,4 +1,8 @@
 Aliyun OpenAPI Go SDK
+=================
+
+[![GoDoc](https://godoc.org/github.com/cxr29/aliyun-openapi-go-sdk?status.svg)](https://godoc.org/github.com/cxr29/aliyun-openapi-go-sdk)
+[![Build Status](https://drone.io/github.com/cxr29/aliyun-openapi-go-sdk/status.png)](https://drone.io/github.com/cxr29/aliyun-openapi-go-sdk/latest)
 
 ### Feature
 - All Aliyun OpenAPI
